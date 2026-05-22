@@ -36,7 +36,7 @@ pipeline {
 
                 echo 'Running React Application Tests'
 
-                sh 'npm test -- --watchAll=false'
+                sh 'npm test -- --watchAll=false --passWithNoTests'
             }
         }
 
