@@ -2,33 +2,57 @@ pipeline {
 
     agent any
 
+    triggers {
+        pollSCM('* * * * *')
+    }
+
+    tools {
+        nodejs 'NodeJS 20'
+    }
+
     stages {
 
-        stage('Welcome') {
+        stage('Pull Latest Code') {
             steps {
 
-                echo 'Hello from Jenkins Pipeline'
+                echo 'New Commit Detected From GitHub Repository'
+
+                git branch: 'main',
+                url: 'https://github.com/trupalgorasiya/React-app-CI-CD.git'
             }
         }
 
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
 
-                echo 'Building Application'
+                echo 'Installing Node Modules'
+
+                sh 'npm install'
             }
         }
 
-        stage('Test') {
+        stage('Run Tests') {
             steps {
 
-                echo 'Running Tests'
+                echo 'Running React Application Tests'
+
+                sh 'npm test -- --watchAll=false'
             }
         }
 
-        stage('Deploy') {
+        stage('Build React Application') {
             steps {
 
-                echo 'Deploying Application'
+                echo 'Creating Production Build'
+
+                sh 'npm run build'
+            }
+        }
+
+        stage('Deployment Ready') {
+            steps {
+
+                echo 'Application Build Ready For Deployment'
             }
         }
     }
@@ -36,11 +60,18 @@ pipeline {
     post {
 
         success {
-            echo 'Pipeline Successful'
+
+            echo 'CI/CD Pipeline Executed Successfully'
         }
 
         failure {
-            echo 'Pipeline Failed'
+
+            echo 'Pipeline Execution Failed'
+        }
+
+        always {
+
+            echo 'Pipeline Finished'
         }
     }
 }
