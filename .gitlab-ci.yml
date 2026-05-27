@@ -1,0 +1,47 @@
+#for a gitlab CI-CD automatic trigger when code push on a gitlab
+
+stages:
+  - setup
+  - install
+  - test
+  - build
+
+variables:
+  NODE_VERSION: "24"
+
+image: node:24
+
+setup_environment:
+
+  stage: setup
+
+  script:
+    - echo "Setting Up NodeJS Environment"
+
+install_dependencies:
+
+  stage: install
+
+  script:
+    - echo "Installing Node Modules"
+    - npm install
+
+run_tests:
+
+  stage: test
+
+  script:
+    - echo "Running React Application Tests"
+    - npm test -- --watchAll=false --passWithNoTests
+
+build_react_application:
+
+  stage: build
+
+  script:
+    - echo "Creating Production Build"
+    - npm run build
+
+  artifacts:
+    paths:
+      - build/
