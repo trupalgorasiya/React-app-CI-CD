@@ -43,3 +43,6 @@ jobs:
 
       - name: Push Version Image
         run: docker push trupalgorasiya/react-cicd-app:${{ github.run_number }}
+
+
+#add Secreat on a github repo->setting -> secreate and variable -> new repository secreate -> add ..
