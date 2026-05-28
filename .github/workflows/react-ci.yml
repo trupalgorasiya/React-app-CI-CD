@@ -30,11 +30,16 @@ jobs:
       - name: Build React Application
         run: npm run build
 
-      - name: build Application Image
-        run: docker build -t react-cicd-app .
+      - name: Build Docker Image
+        run: |
+          docker build -t trupalgorasiya/react-cicd-app:latest .
+          docker build -t trupalgorasiya/react-cicd-app:${{ github.run_number }} .
 
-      - name: Run Container
-        run: docker run -d -p 3000:3000 react-cicd-app
+      - name: DockerHub Login
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Push image on registory
-        run: docker push trupalgorasiya/react-cicd-app
+      - name: Push Latest Image
+        run: docker push trupalgorasiya/react-cicd-app:latest
+
+      - name: Push Version Image
+        run: docker push trupalgorasiya/react-cicd-app:${{ github.run_number }}
