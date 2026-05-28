@@ -51,6 +51,27 @@ The pipeline automatically:
 
 ---
 
+## Docker Registry Login in Jenkins
+
+### Linux Jenkins Agent
+
+```groovy
+withCredentials([usernamePassword(
+    credentialsId: 'dockerhub-creds',
+    usernameVariable: 'DOCKER_USER',
+    passwordVariable: 'DOCKER_PASS'
+)]) {
+
+    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+}
+withCredentials([usernamePassword(
+    credentialsId: 'dockerhub-creds',
+    usernameVariable: 'DOCKER_USER',
+    passwordVariable: 'DOCKER_PASS'
+)]) {
+
+    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
+}
 # 📂 Important File Locations
 
 ## Jenkins Pipeline File
