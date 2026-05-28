@@ -29,3 +29,12 @@ jobs:
 
       - name: Build React Application
         run: npm run build
+
+      - name: build Application Image
+        run: docker build -t react-cicd-app .
+
+      - name: Run Container
+        run: docker run -d -p 3000:3000 react-cicd-app
+
+      - name: Push image on registory
+        run: docker push trupalgorasiya/react-cicd-app
