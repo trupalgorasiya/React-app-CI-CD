@@ -50,6 +50,13 @@ The pipeline automatically:
 | .gitignore                 | Ignore unnecessary files |
 
 ---
+| GitHub Actions Variable | Jenkins Equivalent |
+|-------------------------|-------------------|
+| `github.run_number`     | `BUILD_NUMBER`    |
+| `github.sha`            | `GIT_COMMIT`      |
+| `github.ref`            | `BRANCH_NAME`     |
+| `github.actor`          | `BUILD_USER`      |
+---
 
 ## Docker Registry Login in Jenkins
 

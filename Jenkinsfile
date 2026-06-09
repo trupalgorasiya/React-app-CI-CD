@@ -49,10 +49,45 @@ pipeline {
             }
         }
 
-        stage('Deployment Ready') {
+        stage('Build Docker Image') {
             steps {
 
-                echo 'Application Build Ready For Deployment'
+                echo 'Building Docker Image'
+                sh 'docker build -t trupalgorasiya/react-cicd-app:latest .'
+                sh 'docker build -t trupalgorasiya/react-cicd-app:${BUILD_NUMBER} .'
+            }
+        }
+
+        stage('DockerHub Login') {
+
+            steps {
+                 withCredentials([
+                    string(credentialsId: 'USER', variable: 'DOCKER_USER'),
+                    string(credentialsId: 'PASS', variable: 'DOCKER_PASS')
+                ]) {
+
+                    sh '''
+                    docker login -u $DOCKER_USER -p $DOCKER_PASS
+                    '''
+                }
+            }
+        }
+
+        stage('Push Latest Image') {
+            steps {
+                
+                echo 'push Latest image'
+
+                sh 'docker push trupalgorasiya/react-cicd-app:latest'
+            }
+        }
+
+        stage('Push Version Image') {
+            steps {
+                
+                echo 'push version image'
+
+                sh 'docker build -t trupalgorasiya/react-cicd-app:${BUILD_NUMBER} '
             }
         }
     }
