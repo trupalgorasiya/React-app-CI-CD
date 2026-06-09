@@ -91,7 +91,7 @@ pipeline {
                 
                 echo 'push version image'
 
-                sh 'docker build -t trupalgorasiya/react-cicd-app:${BUILD_NUMBER} '
+                sh 'docker push trupalgorasiya/react-cicd-app:${BUILD_NUMBER} '
             }
         }
     }
