@@ -30,7 +30,11 @@ pipeline {
                 sh 'npm install'
             }
         }
-
+        stage('Check Docker') {
+            steps {
+                sh 'docker version'
+            }
+        }
         stage('Run Tests') {
             steps {
 
